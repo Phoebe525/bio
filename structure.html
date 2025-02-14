@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structure - Nervous System Adventure</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 保持所有原有样式 */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 0;
+            color: #004d40;
+            font-size: 18px;
+        }
+
+        header {
+            background-color: #00796b;
+            color: #ffffff;
+            text-align: center;
+            padding: 1em 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-size: 32px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header a:hover {
+            color: #ff5722;
+        }
+
+        nav {
+            background-color: #004d40;
+            padding: 0.8em;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #ffffff;
+            background-color: #00796b;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #ff5722;
+            transform: scale(1.1);
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #00796b;
+            font-size: 28px;
+        }
+
+        .container p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .container strong {
+            color: #26796b;
+        }
+
+        footer {
+            background-color: #00796b;
+            color: #ffffff;
+            text-align: center;
+            padding: 1em 0;
+            margin-top: 20px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 模态框相关样式 */
+        .clickable-image {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html">🌟 Nervous System Adventure 🌟</a>
+    </header>
+
+    <nav>
+        <a href="introduction.html">🚀 Introduction</a>
+        <a href="structure.html">🧠 Structure</a>
+        <a href="function.html">⚡ Function</a>
+        <a href="conclusion.html">🎯 Conclusion</a>
+    </nav>
+
+    <div class="container">
+        <h2>🧠 The Structure of the Nervous System</h2>
+        <p>The nervous system is an intricate network that helps the body communicate and respond to its environment.</p>
+        <p><strong>🔹 Central Nervous System (CNS)</strong>: Includes the brain and spinal cord, responsible for processing and sending messages.</p>
+        <p><strong>🔹 Peripheral Nervous System (PNS)</strong>: Consists of sensory and motor neurons that connect the CNS to the rest of the body.</p>
+        <p>The brain itself is divided into different regions responsible for various functions, such as:</p>
+        <ul>
+            <li><strong>Cerebrum</strong>: Controls thinking, memory, and voluntary movements.</li>
+            <li><strong>Cerebellum</strong>: Helps with balance and coordination.</li>
+            <li><strong>Brainstem</strong>: Regulates vital functions like breathing and heart rate.</li>
+        </ul>
+        <h3>🧩 Neurons: The Building Blocks of the Nervous System</h3>
+        <p>Neurons are special cells that transmit electrical and chemical signals throughout the nervous system.</p>
+        <img src="/神经元.png" alt="Neurons" height="200px" width="200px" class="clickable-image">
+        <ul>
+            <li><strong>Dendrites</strong>: Receive signals from other neurons.</li>
+            <li><strong>Axon</strong>: Sends signals away from the neuron.</li>
+            <li><strong>Synapse</strong>: The gap between neurons where messages are transmitted.</li>
+        </ul>
+        <p>These amazing cells allow us to move, think, and feel the world around us! ⚡</p>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Nervous System Adventure 🚀</p>
+    </footer>
+
+    <script>
+        // 获取模态框元素
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeBtn = document.getElementsByClassName("modal-close")[0];
+
+        // 为可点击图片添加事件监听器
+        document.querySelectorAll('.clickable-image').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "flex";
+                modalImg.src = this.src;
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+        });
+
+        // 关闭模态框函数
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300);
+        }
+
+        // 关闭按钮点击事件
+        closeBtn.onclick = closeModal;
+
+        // 点击模态框背景关闭
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

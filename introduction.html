@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - Nervous System Adventure</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* 原有样式保持不变 */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 0;
+            color: #004d40;
+            font-size: 18px;
+        }
+
+        header {
+            background-color: #00796b;
+            color: #ffffff;
+            text-align: center;
+            padding: 1em 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-size: 32px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header a:hover {
+            color: #ff5722;
+        }
+
+        nav {
+            background-color: #004d40;
+            padding: 0.8em;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #ffffff;
+            background-color: #00796b;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #ff5722;
+            transform: scale(1.1);
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #ffffff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #00796b;
+            font-size: 28px;
+        }
+
+        .container p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .container strong {
+            color: #26796b;
+        }
+
+        .mindmap {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #00796b;
+            color: #ffffff;
+            text-align: center;
+            padding: 1em 0;
+            margin-top: 20px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 新增的模态框样式 */
+        .clickable-image {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="nervous system.html">🌟 Nervous System Adventure 🌟</a>
+    </header>
+
+    <nav>
+        <a href="introduction.html">🚀 Introduction</a>
+        <a href="structure.html">🧠 Structure</a>
+        <a href="function.html">⚡ Function</a>
+        <a href="conclusion.html">🎯 Conclusion</a>
+    </nav>
+
+    <div class="container">
+        <h2>🚀 Introduction to the Nervous System</h2>
+        <p>The human nervous system is a fascinating and complex network that acts like the body's supercomputer! It sends messages at lightning speed, helping you move, feel, and think.</p>
+        <p><strong style="font-size: 22px;">🧠 The nervous system has two main parts:</strong></p>
+        <ul>
+            <li><strong>Central Nervous System (CNS)</strong>: The brain and spinal cord, the control center.</li>
+            <img src="/CNS.png" alt="Central Nervous System" height="200px" width="200px" class="clickable-image">
+            <li><strong>Peripheral Nervous System (PNS)</strong>: A vast network of nerves that connect the CNS to the rest of your body.</li>
+            <img src="/PNS.png" alt="Peripheral Nervous System" height="200px" width="200px" class="clickable-image">
+        </ul>
+        <p><strong style="font-size: 22px;">🌟 The Peripheral Nervous System is further divided into two key parts:</strong></p>
+        <ul>
+            <li><strong>Sympathetic Nervous System</strong>: This is your body's "fight or flight" system! When you're in danger or under stress, it increases your heart rate, dilates your pupils, and boosts your energy.</li>
+            <li><strong>Parasympathetic Nervous System</strong>: Known as the "rest and digest" system, it helps slow your heart rate, relax your muscles, and promote digestion after a stressful event.</li>
+        </ul>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <div class="mindmap">
+        <svg width="1000" height="600"></svg>
+    </div>
+
+    <script>
+        // D3.js代码保持不变
+        const svg = d3.select("svg"),
+              width = +svg.attr("width"),
+              height = +svg.attr("height"),
+              g = svg.append("g").attr("transform", "translate(40,40)");
+
+        const data = {
+            name: "Nervous System",
+            children: [
+                { 
+                    name: "CNS", 
+                    children: [
+                        { name: "Brain" }, 
+                        { name: "Spinal Cord" }
+                    ]
+                },
+                { 
+                    name: "PNS", 
+                    children: [
+                        { name: "Somatic Nervous System" },
+                        { 
+                            name: "Autonomic Nervous System", 
+                            children: [
+                                { 
+                                    name: "Sympathetic",
+                                    children: [
+                                        { name: "Fight or Flight" },
+                                        { name: "↑ Heart Rate" },
+                                        { name: "↑ Blood Pressure" }
+                                    ]
+                                },
+                                { 
+                                    name: "Parasympathetic",
+                                    children: [
+                                        { name: "Rest and Digest" },
+                                        { name: "↓ Heart Rate" },
+                                        { name: "↑ Digestion" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const root = d3.hierarchy(data);
+        const treeLayout = d3.tree().size([height - 100, width - 160]);
+        treeLayout(root);
+
+        g.selectAll("line")
+            .data(root.links())
+            .enter()
+            .append("line")
+            .attr("x1", d => d.source.y)
+            .attr("y1", d => d.source.x)
+            .attr("x2", d => d.target.y)
+            .attr("y2", d => d.target.x)
+            .attr("stroke", "#00796b")
+            .attr("stroke-width", 2);
+
+        g.selectAll("circle")
+            .data(root.descendants())
+            .enter()
+            .append("circle")
+            .attr("cx", d => d.y)
+            .attr("cy", d => d.x)
+            .attr("r", 6)
+            .attr("fill", d => d.data.name === "Sympathetic" || d.data.name === "Parasympathetic" ? "#ff5722" : "#00796b");
+
+        g.selectAll("text")
+            .data(root.descendants())
+            .enter()
+            .append("text")
+            .attr("x", d => d.y + 10)
+            .attr("y", d => d.x + 5)
+            .text(d => d.data.name)
+            .attr("font-size", "16px")
+            .attr("fill", "#004d40")
+            .attr("font-weight", d => 
+                d.data.name === "Sympathetic" || 
+                d.data.name === "Parasympathetic" ? 
+                "bold" : "normal");
+
+        // 新增的图片放大功能代码
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeBtn = document.getElementsByClassName("modal-close")[0];
+
+        // 为所有可点击图片添加点击事件
+        document.querySelectorAll('.clickable-image').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "flex";
+                modalImg.src = this.src;
+            }
+        });
+
+        // 点击关闭按钮关闭模态框
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 点击模态框外部关闭模态框
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Nervous System Adventure 🚀</p>
+    </footer>
+</body>
+</html>
